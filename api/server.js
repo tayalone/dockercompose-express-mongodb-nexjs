@@ -7,6 +7,8 @@ const cors = require('cors')
 
 const { divide } = require('./utils/common')
 
+const { preventDivideByZero } = require('./middlewares')
+
 const app = express()
 
 app.use(morgan('dev'))
@@ -24,7 +26,7 @@ app.use(cors())
 app.get('/', (req, res) => {
   return res.send({ message: 'OK' })
 })
-app.post('/divide', (req, res) => {
+app.post('/divide', preventDivideByZero, (req, res) => {
   const { body } = req
   const { dividend, divisor } = body
   const { result, portion } = divide(dividend, divisor)

@@ -1,5 +1,9 @@
 const request = require('supertest')
 const app = require('../../../server')
+const {
+  divisorErrorKey,
+  divisorErrorMessage
+} = require('../../../middlewares/preventDivideByZero')
 describe('Common POST :/divide', () => {
   let res = null
   describe('Case: Divisible', () => {
@@ -47,13 +51,14 @@ describe('Common POST :/divide', () => {
       })
     })
     test('statusCode should be 400', async () => {
+      console.log(`res.body.errMessage`, res.body.errMessage)
       expect(res.statusCode).toEqual(400)
     })
-    // test('data.message should be OK', async () => {
-    //   expect(res.body.message).toEqual('OK')
-    // })
-    // test('data.result should be 1', async () => {
-    //   expect(res.body.result).toEqual(1)
-    // })
+    test(`res.body.errMessage should be '${divisorErrorMessage}'`, () => {
+      expect(res.body.errMessage).toEqual(divisorErrorMessage)
+    })
+    test(`res.body.errKey should be '${divisorErrorKey}'`, () => {
+      expect(res.body.errKey).toEqual(divisorErrorKey)
+    })
   })
 })
