@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test-all": "jest --watchAll --coverage --runInBand",
+    "test-all": "jest --coverage --runInBand",
     "test": "jest --watch --coverage --runInBand",
     "dev": "nodemon index"
   },
