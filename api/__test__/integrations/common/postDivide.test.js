@@ -1,9 +1,6 @@
 const request = require('supertest')
 const app = require('../../../server')
-const {
-  divisorErrorKey,
-  divisorErrorMessage
-} = require('../../../middlewares/preventDivideByZero')
+
 describe('Common POST :/divide', () => {
   let res = null
   describe('Case: Divisible', () => {
@@ -51,14 +48,117 @@ describe('Common POST :/divide', () => {
       })
     })
     test('statusCode should be 400', async () => {
-      console.log(`res.body.errMessage`, res.body.errMessage)
+      // console.log(`res.body`, res.body.details)
       expect(res.statusCode).toEqual(400)
     })
-    test(`res.body.errMessage should be '${divisorErrorMessage}'`, () => {
-      expect(res.body.errMessage).toEqual(divisorErrorMessage)
+    test(`res.body.message should be 'Validation Failed'`, () => {
+      expect(res.body.message).toEqual('Validation Failed')
     })
-    test(`res.body.errKey should be '${divisorErrorKey}'`, () => {
-      expect(res.body.errKey).toEqual(divisorErrorKey)
+    test(`res.body.error should be 'error'`, () => {
+      expect(res.body.error).toEqual('Bad Request')
+    })
+    test(`res.body.details.body[0].message should be '"divisor" contains an invalid value'`, () => {
+      expect(res.body.details.body[0].message).toEqual(
+        '"divisor" contains an invalid value'
+      )
+    })
+  })
+  describe('Case: Parmeter error', () => {
+    describe('SubCase: dividend', () => {
+      describe('Subsubcase: empty value', () => {
+        beforeAll(async () => {
+          res = await request(app).post('/divide').send({
+            dividend: undefined,
+            divisor: 0
+          })
+        })
+        test('statusCode should be 400', async () => {
+          // console.log(`res.body`, res.body.details)
+          expect(res.statusCode).toEqual(400)
+        })
+        test(`res.body.message should be 'Validation Failed'`, () => {
+          expect(res.body.message).toEqual('Validation Failed')
+        })
+        test(`res.body.error should be 'error'`, () => {
+          expect(res.body.error).toEqual('Bad Request')
+        })
+        test(`res.body.details.body[0].message should be  '"dividend" is required'`, () => {
+          expect(res.body.details.body[0].message).toEqual(
+            '"dividend" is required'
+          )
+        })
+      })
+      describe('Subsubcase: type mismatch', () => {
+        beforeAll(async () => {
+          res = await request(app).post('/divide').send({
+            dividend: 'hello world',
+            divisor: 0
+          })
+        })
+        test('statusCode should be 400', async () => {
+          // console.log(`res.body`, res.body.details)
+          expect(res.statusCode).toEqual(400)
+        })
+        test(`res.body.message should be 'Validation Failed'`, () => {
+          expect(res.body.message).toEqual('Validation Failed')
+        })
+        test(`res.body.error should be 'error'`, () => {
+          expect(res.body.error).toEqual('Bad Request')
+        })
+        test(`res.body.details.body[0].message should be  '"dividend" must be a number'`, () => {
+          expect(res.body.details.body[0].message).toEqual(
+            '"dividend" must be a number'
+          )
+        })
+      })
+    })
+    describe('SubCase: divisor', () => {
+      describe('Subsubcase: empty value', () => {
+        beforeAll(async () => {
+          res = await request(app).post('/divide').send({
+            dividend: 10,
+            divisor: undefined
+          })
+        })
+        test('statusCode should be 400', async () => {
+          // console.log(`res.body`, res.body.details)
+          expect(res.statusCode).toEqual(400)
+        })
+        test(`res.body.message should be 'Validation Failed'`, () => {
+          expect(res.body.message).toEqual('Validation Failed')
+        })
+        test(`res.body.error should be 'error'`, () => {
+          expect(res.body.error).toEqual('Bad Request')
+        })
+        test(`res.body.details.body[0].message should be  '"divisor" is required'`, () => {
+          expect(res.body.details.body[0].message).toEqual(
+            '"divisor" is required'
+          )
+        })
+      })
+      describe('Subsubcase: type mismatch', () => {
+        beforeAll(async () => {
+          res = await request(app).post('/divide').send({
+            dividend: 10,
+            divisor: 'hello world'
+          })
+        })
+        test('statusCode should be 400', async () => {
+          // console.log(`res.body`, res.body.details)
+          expect(res.statusCode).toEqual(400)
+        })
+        test(`res.body.message should be 'Validation Failed'`, () => {
+          expect(res.body.message).toEqual('Validation Failed')
+        })
+        test(`res.body.error should be 'error'`, () => {
+          expect(res.body.error).toEqual('Bad Request')
+        })
+        test(`res.body.details.body[0].message should be  '"divisor" must be a number'`, () => {
+          expect(res.body.details.body[0].message).toEqual(
+            '"divisor" must be a number'
+          )
+        })
+      })
     })
   })
 })

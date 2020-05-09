@@ -5,11 +5,7 @@ const compress = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const { validate, ValidationError, Joi } = require('express-validation')
-
-const { divide } = require('./utils/common')
-
-const { preventDivideByZero } = require('./middlewares')
+const { ValidationError } = require('express-validation')
 
 const routes = require('./routes')
 
@@ -38,13 +34,21 @@ app.use(cors())
 // })
 
 app.use(function (err, req, res, next) {
+  console.log(`xxx`, err)
+  if (err instanceof ValidationError) {
+    return res.status(err.statusCode).json(err)
+  }
+  return res.status(500).json(err)
+})
+
+app.use(routes)
+
+app.use(function (err, req, res, next) {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json(err)
   }
 
   return res.status(500).json(err)
 })
-
-app.use(routes)
 
 module.exports = app
