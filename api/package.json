@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-all": "jest --watchAll --coverage --runInBand",
+    "test": "jest --watch --coverage --runInBand",
+    "dev": "nodemon index"
   },
-  "author": "",
+  "author": "ntayz",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.7.2",
@@ -17,5 +19,19 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "node-mocks-http": "^1.8.1",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/index.js"
+    ]
   }
 }
