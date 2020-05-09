@@ -8,7 +8,7 @@ const { divide } = require('../../utils/common')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  return res.send({ message: 'OK !!!' })
+  return res.send({ message: 'OK ,Very Good !!!' })
 })
 
 router.post('/divide', validate(divideValid), (req, res) => {
