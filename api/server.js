@@ -9,6 +9,8 @@ const { divide } = require('./utils/common')
 
 const { preventDivideByZero } = require('./middlewares')
 
+const routes = require('./routes')
+
 const app = express()
 
 app.use(morgan('dev'))
@@ -23,14 +25,16 @@ app.use(helmet())
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors())
 
-app.get('/', (req, res) => {
-  return res.send({ message: 'OK' })
-})
-app.post('/divide', preventDivideByZero, (req, res) => {
-  const { body } = req
-  const { dividend, divisor } = body
-  const { result, portion } = divide(dividend, divisor)
-  return res.send({ message: 'OK', result, portion })
-})
+// app.get('/', (req, res) => {
+//   return res.send({ message: 'OK' })
+// })
+// app.post('/divide', preventDivideByZero, (req, res) => {
+//   const { body } = req
+//   const { dividend, divisor } = body
+//   const { result, portion } = divide(dividend, divisor)
+//   return res.send({ message: 'OK', result, portion })
+// })
+
+app.use(routes)
 
 module.exports = app
