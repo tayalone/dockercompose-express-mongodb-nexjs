@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app = require('../../../server')
-describe('Common post :/divide', () => {
+describe('Common POST :/divide', () => {
   let res = null
   describe('Case: Divisible', () => {
     beforeAll(async () => {
