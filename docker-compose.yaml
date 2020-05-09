@@ -7,3 +7,5 @@ services:
     volumes:
       - /usr/app/node_modules
       - ./api:/usr/app
+    ports:
+      - '3000:3000'
