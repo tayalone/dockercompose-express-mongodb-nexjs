@@ -5,12 +5,10 @@ const { divideValid } = require('./validate')
 
 const { divide } = require('../../utils/common')
 
-const { preventDivideByZero } = require('../../middlewares')
-
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  return res.send({ message: 'OK' })
+  return res.send({ message: 'OK !!!' })
 })
 
 router.post('/divide', validate(divideValid), (req, res) => {

@@ -9,6 +9,6 @@ describe('Common GET :/', () => {
     expect(res.statusCode).toEqual(200)
   })
   test('data.message should be OK', async () => {
-    expect(res.body.message).toEqual('OK')
+    expect(res.body.message).toEqual('OK !!!')
   })
 })
