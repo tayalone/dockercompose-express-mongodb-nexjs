@@ -33,7 +33,8 @@
     "verbose": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
-      "<rootDir>/index.js"
+      "<rootDir>/index.js",
+      "<rootDir>/server.js"
     ]
   }
 }

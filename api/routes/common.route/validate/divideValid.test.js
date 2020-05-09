@@ -1,33 +1,45 @@
 const divideValid = require('./divideValid')
 
 const successObject = {
-  dividend: 20,
-  divisor: 10
+  body: {
+    dividend: 20,
+    divisor: 10
+  }
 }
 
 const divideZeroObject = {
-  dividend: 20,
-  divisor: 0
+  body: {
+    dividend: 20,
+    divisor: 0
+  }
 }
 
 const failObject1 = {
-  dividend: undefined,
-  divisor: 10
+  body: {
+    dividend: undefined,
+    divisor: 10
+  }
 }
 
 const failObject2 = {
-  dividend: {},
-  divisor: 10
+  body: {
+    dividend: {},
+    divisor: 10
+  }
 }
 
 const failObject3 = {
-  dividend: 10,
-  divisor: undefined
+  body: {
+    dividend: 10,
+    divisor: undefined
+  }
 }
 
 const failObject4 = {
-  dividend: 10,
-  divisor: {}
+  body: {
+    dividend: 10,
+    divisor: {}
+  }
 }
 
 describe('Test: routes/commom/validate/divideValid', () => {
@@ -35,9 +47,10 @@ describe('Test: routes/commom/validate/divideValid', () => {
     let error = null
     let value = null
     beforeAll(() => {
-      const result = divideValid.validate(successObject)
+      const result = divideValid.body.validate(successObject.body)
       error = result.error
       value = result.value
+      console.log(`error`, error)
     })
     test('error should be undefined', () => {
       expect(error).toEqual(undefined)
@@ -48,7 +61,7 @@ describe('Test: routes/commom/validate/divideValid', () => {
       let error = null
       let value = null
       beforeAll(() => {
-        const result = divideValid.validate(divideZeroObject)
+        const result = divideValid.body.validate(divideZeroObject.body)
         error = result.error
         value = result.value
       })
@@ -61,7 +74,7 @@ describe('Test: routes/commom/validate/divideValid', () => {
         let error = null
         let value = null
         beforeAll(() => {
-          const result = divideValid.validate(failObject2)
+          const result = divideValid.body.validate(failObject2.body)
           error = result.error
           value = result.value
         })
@@ -73,7 +86,7 @@ describe('Test: routes/commom/validate/divideValid', () => {
         let error = null
         let value = null
         beforeAll(() => {
-          const result = divideValid.validate(failObject1)
+          const result = divideValid.body.validate(failObject1.body)
           error = result.error
           value = result.value
         })
@@ -87,7 +100,7 @@ describe('Test: routes/commom/validate/divideValid', () => {
         let error = null
         let value = null
         beforeAll(() => {
-          const result = divideValid.validate(failObject3)
+          const result = divideValid.body.validate(failObject3.body)
           error = result.error
           value = result.value
         })
@@ -99,7 +112,7 @@ describe('Test: routes/commom/validate/divideValid', () => {
         let error = null
         let value = null
         beforeAll(() => {
-          const result = divideValid.validate(failObject4)
+          const result = divideValid.body.validate(failObject4.body)
           error = result.error
           value = result.value
         })

@@ -5,6 +5,8 @@ const compress = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
+const { validate, ValidationError, Joi } = require('express-validation')
+
 const { divide } = require('./utils/common')
 
 const { preventDivideByZero } = require('./middlewares')
@@ -34,6 +36,14 @@ app.use(cors())
 //   const { result, portion } = divide(dividend, divisor)
 //   return res.send({ message: 'OK', result, portion })
 // })
+
+app.use(function (err, req, res, next) {
+  if (err instanceof ValidationError) {
+    return res.status(err.statusCode).json(err)
+  }
+
+  return res.status(500).json(err)
+})
 
 app.use(routes)
 
